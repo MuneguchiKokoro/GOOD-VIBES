@@ -404,7 +404,12 @@ header h1 {font-size:30px;}
   justify-content: center;
 }
 
-
+.GetCardImg{
+  width: 200px;
+}
+.AgainImg{
+  width: 180px;
+}
 
 .appear{
     display: block;
