@@ -181,6 +181,13 @@ header img{
 main {
 	background-color: white;
 	text-align: center;
+  padding-top: 170px;
+}
+
+@media all and (max-width: 670px) {
+  main {
+    padding-top: 70px;
+  }
 }
 
 .MIX_title{
