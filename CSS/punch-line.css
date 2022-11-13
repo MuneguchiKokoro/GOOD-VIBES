@@ -487,6 +487,12 @@ button {
   text-align: center;
 }
 @media all and (max-width: 670px) {
+  .sentence{
+    padding-bottom: 0px;
+    padding-top: 100px;
+  }
+}
+@media all and (max-width: 670px) {
   #app{
     text-align: center;
   }
@@ -502,10 +508,6 @@ button {
   }
   .sp{
     display: block;
-  }
-  .sentence{
-    padding-bottom: 0px;
-    padding-top: 120px;
   }
 }
 
