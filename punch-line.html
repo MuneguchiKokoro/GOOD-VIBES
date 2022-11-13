@@ -1,524 +1,341 @@
-@charset "UTF-8";
-@import url(https://fonts.googleapis.com/css?family=Oswald);
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>GOOD VIBES</title>
+    <link rel="stylesheet" href="./CSS/punch-line.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
 
-*{
-  margin: 0px;
-  padding: 0px;
-}
+<body>
+    <div id="loader-bg">
+        <div id="loader">
+        <div class="sk-cube-grid">
+        <div class="sk-cube sk-cube1"></div>
+        <div class="sk-cube sk-cube2"></div>
+        <div class="sk-cube sk-cube3"></div>
+        <div class="sk-cube sk-cube4"></div>
+        <div class="sk-cube sk-cube5"></div>
+        <div class="sk-cube sk-cube6"></div>
+        <div class="sk-cube sk-cube7"></div>
+        <div class="sk-cube sk-cube8"></div>
+        <div class="sk-cube sk-cube9"></div>
+        </div>
+        </div>
+    </div>
 
-*, *::before, *::after {box-sizing:border-box;}
+  <div id="wrap">
+    <header class="header"><a href="index.html"><img src="./images/logo.png"></a></header>
 
-html {font-size:62.5%;}
-body {
-  font-size:1.4rem;
-  font-family: 'Oswald', Arial, sans-serif;
-}
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
 
-.clearfix::after {
-  content:'';
-  display:block;
-  clear:both;
-}
+      <nav class="globalMenuSp">
+        <ul>
+          <li><a href="about.html">ABOUT THIS SITE</a></li>
+          <li><a href="me.html">ABOUT ME</a></li>
+          <li><a href="rappers.html">RAPPERS</a></li>
+          <li><a href="garally.html">GARALLY</a></li>
+          <li><a href="punch-line.html">PUNCH LINE</a></li>
+          <li><a href="contact.html">CONTACT</a></li>
+          <li style="text-shadow: 0 0 10px #fff,0 0 15px #fff;"><a href="bonus.html">BONUS CONTENTS</a></li>
+        </ul>
+      </nav>
 
-#loader-bg {
-  display: none;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0px;
-  left: 0px;
-  background: #000;
-  z-index: 100;
-}
+      <nav class="gnav">
+        <ul class="gnav_wrapper">
+        <li><a href="about.html">ABOUT THIS SITE</a></li>
+        <li><a href="me.html">ABOUT ME</a></li>
+        <li><a href="rappers.html">RAPPERS</a></li>
+        <li><a href="garally.html">GARALLY</a></li>
+        <li><a href="punch-line.html">PUNCH LINE</a></li>
+        <li><a href="contact.html">CONTACT</a></li>
+        <li style="text-shadow: 0 0 10px #fff,0 0 15px #fff;"><a href="bonus.html">BONUS CONTENTS</a></li>
+        </ul>
+      </nav>
+      
+    <div class="wrapper">
+        <div class="sentence">
+            <h2 class="MIX_title"><img src="./images/punch-line-images/punchline.png" class="PunchLineIcon" alt="">PUNCH LINE</h2>
+            <div class="explain">
+                <p>ここではパンチライン<span style="font-size: 11px;">※</span>を閲覧出来ます。</p>
+                <p style="font-size: 11px;">※印象的・衝撃的な歌詞を指す言葉。</p>
+            </div>
+        </div>
 
-.sk-cube-grid {
-  width: 80px;
-  height: 80px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
-}
+        <div id="app">
+            <div class="searchBoxWrapper">
+                <input class="searchBox" type="text"placeholder="  検索" v-model="keyword">
+            </div>
+            
+            <div class="cardWrapper">
+                <div class="card" v-for="rapper in filteredRappers" :key="rapper.id">
+        
+                    <div class="icon" v-bind:data-micromodal-trigger="`modal-ArtistImg${rapper.id}`"><img style="width:100%;height:100%;object-fit:cover;" :src="rapper.rapperImg"></div>
+        
+                    <div class="micromodal-slide" v-bind:id="`modal-ArtistImg${rapper.id}`">
+                    <div style="z-index:2;" class="modal__overlay" data-micromodal-close>
+                        <div class="modal__container">
+                        <div class="modal__inner">
+                            <header class="modal__header"><button class="modal__close"data-micromodal-close></button></header>
+                            <main class="modal__content"><img class="sp-ArtistImg" :src="rapper.rapperImg"></main>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+        
+                    <span class="songName" v-text="rapper.song"></span>
+                    <div class="imgWrapper" v-bind:data-micromodal-trigger="`modal-AlbumImg${rapper.id}`"><img style="width:100%;height:100%;object-fit:cover;" :src="rapper.albumImg"></div>
+        
+                    <div class="micromodal-slide" v-bind:id="`modal-AlbumImg${rapper.id}`">
+                        <div style="z-index:2;" class="modal__overlay" data-micromodal-close>
+                        <div class="modal__container">
+                            <div class="modal__inner">
+                            <header class="modal__header"><button class="modal__close"data-micromodal-close></button></header>
+                            <main class="modal__content"><img class="sp-AlbumImg" :src="rapper.albumImg"></main>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+        
+                    <div class="article">
+                        <p style="padding-top: 55px;" v-text="rapper.name"></p>
+                        <p class="lyrics" v-text="rapper.lyrics"></p>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+    </div>   
 
-.sk-cube-grid .sk-cube {
-  width: 33%;
-  height: 33%;
-  background-color: #fff;
-  float: left;
-  -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
-          animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; 
-}
-.sk-cube-grid .sk-cube1 {
-  -webkit-animation-delay: 0.2s;
-          animation-delay: 0.2s; }
-.sk-cube-grid .sk-cube2 {
-  -webkit-animation-delay: 0.3s;
-          animation-delay: 0.3s; }
-.sk-cube-grid .sk-cube3 {
-  -webkit-animation-delay: 0.4s;
-          animation-delay: 0.4s; }
-.sk-cube-grid .sk-cube4 {
-  -webkit-animation-delay: 0.1s;
-          animation-delay: 0.1s; }
-.sk-cube-grid .sk-cube5 {
-  -webkit-animation-delay: 0.2s;
-          animation-delay: 0.2s; }
-.sk-cube-grid .sk-cube6 {
-  -webkit-animation-delay: 0.3s;
-          animation-delay: 0.3s; }
-.sk-cube-grid .sk-cube7 {
-  -webkit-animation-delay: 0s;
-          animation-delay: 0s; }
-.sk-cube-grid .sk-cube8 {
-  -webkit-animation-delay: 0.1s;
-          animation-delay: 0.1s; }
-.sk-cube-grid .sk-cube9 {
-  -webkit-animation-delay: 0.2s;
-          animation-delay: 0.2s; }
+    <footer><p>copyright ©️ 2022 DJ NULL</p></footer>
 
-@-webkit-keyframes sk-cubeGridScaleDelay {
-  0%, 70%, 100% {
-    -webkit-transform: scale3D(1, 1, 1);
-            transform: scale3D(1, 1, 1);
-  } 35% {
-    -webkit-transform: scale3D(0, 0, 1);
-            transform: scale3D(0, 0, 1); 
-  }
-}
-@keyframes sk-cubeGridScaleDelay {
-  0%, 70%, 100% {
-    -webkit-transform: scale3D(1, 1, 1);
-            transform: scale3D(1, 1, 1);
-  } 35% {
-    -webkit-transform: scale3D(0, 0, 1);
-            transform: scale3D(0, 0, 1);
-  } 
-}
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        display: none;
-        opacity: 0;
-        z-index: -1;
-    }
-}
-
-.header{
-  background-color: black;
-  height: 120px;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  z-index : 97;
-}
-header img{
-  float:left;
-  width: 320px;
-  margin: 20px 0 10px 20px;
-}
-@media all and (max-width: 670px) {
-  .header{
-    height: 70px;
-    text-align: center;
-  }
-  header img {
-    width: 220px;
-    float: none;
-    margin: 8px 0 10px -10px;
-  }
-}
-
-.sp{display:none;}
-
-.gnav{
-  width: 100%;
-  background-color: #333;
-  position: fixed;
-  top: 0;
-  margin-top: 120px;
-  z-index : 97;
-}
-
-.gnav_wrapper{
-    max-width: 980px;
-    margin: auto;
-    display: flex;
-	list-style: none;
-}
-.gnav_wrapper li{
-    border-left: #888 1px solid;
-    text-align: center;
-    width: calc(100%/7);
-    transition: all  0.3s ease;
-}
-.gnav_wrapper li:last-child{border-right: #888 1px solid;}
-.gnav_wrapper li:hover{background-color: #888;}
-.gnav_wrapper li a{
-    display: block;
-    padding: 1.3em 0;
-    color: #fff;
-    text-decoration: none;
-}
-
-footer {
-	background-color: black;
-	border-top: solid 1px #eee;
-	height:120px;
-  width: 100%;
-	color:white;
-	font-size:15px;
-	padding-top:30px;
-	padding:20px;
-}
-
-.hamburger {
-  display : block;
-  position: fixed;
-  z-index : 99;
-  right : 13px;
-  top   : 12px;
-  width : 42px;
-  height: 42px;
-  cursor: pointer;
-  text-align: center;
-  display:none;
-}
-.hamburger span {
-  display : block;
-  position: absolute;
-  width   : 30px;
-  height  : 2px ;
-  left    : 6px;
-  background : #555;
-  -webkit-transition: 0.5s ease-in-out;
-  -moz-transition   : 0.5s ease-in-out;
-  transition        : 0.5s ease-in-out;
-}
-.hamburger span:nth-child(1) {top: 10px;}
-.hamburger span:nth-child(2) {top: 20px;}
-.hamburger span:nth-child(3) {top: 30px;}
-
-/* ナビ開いてる時のボタン */
-.hamburger.active span:nth-child(1) {
-  top : 16px;
-  left: 6px;
-  background : #fff;
-  -webkit-transform: rotate(315deg);
-  -moz-transform   : rotate(315deg);
-  transform        : rotate(315deg);
-}
-
-.hamburger.active span:nth-child(2),
-.hamburger.active span:nth-child(3) {
-  top: 16px;
-  background : #fff;
-  -webkit-transform: rotate(-315deg);
-  -moz-transform   : rotate(-315deg);
-  transform        : rotate(-315deg);
-}
-
-nav.globalMenuSp {
-  position: fixed;
-  z-index : 98;
-  top  : 0;
-  left : 0;
-  color: #fff;
-  background: rgba(0,0,0,0.7);
-  text-align: center;
-  width: 100%;
-  display: none;
-}
-
-
-nav.globalMenuSp ul {
-  margin: 0 auto;
-  padding: 0;
-  width: 100%;
-}
-
-nav.globalMenuSp ul li {
-  list-style-type: none;
-  padding: 0;
-  width: 100%;
-  transition: .4s all;
-}
-
-nav.globalMenuSp ul li:last-child {padding-bottom: 0;}
-nav.globalMenuSp ul li:hover{background :#ddd;}
-
-nav.globalMenuSp ul li a {
-  display: block;
-  color: #fff;
-  padding: 1em 0;
-  text-decoration :none;
-}
-
-/* このクラスを、jQueryで付与・削除する */
-nav.globalMenuSp.active {display: block;}
-
-@media all and (max-width: 670px) {
-.sp{
-display:block;
-}
-
-.sk-cube-grid {
-  width: 60px;
-  height: 60px;
-}
-
-.gnav {display: none;}
-.hamburger {display: block;}
-}
-
-.wrapper{
-  width: 100vw;
-  background-color: #f2f0f0;
-}
-#app{
-  width: 90%;
-  max-width: 1000px;
-  margin: auto;
-  background-color: #f2f0f0;
-}
-.searchBoxWrapper{
-  text-align: center;
-}
-.searchBox{
-  width: 400px;
-  height: 50px;
-  border: none;
-  margin-top: 30px;
-  margin-bottom: 60px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
-}
-input[type="text"]:focus {
-  border: 1px solid #b4b3b1;
-  outline: 0;
-}
-.cardWrapper{
-  display: flex; 
-  flex-wrap:wrap; 
-  width: 100%; 
-  margin: auto;
-}
-.card{
-  max-width:300px;
-  min-width: 300px;
-  height: 450px;
-  background-color: white;
-  margin: auto;
-  margin-top: 30px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
-  overflow: hidden;
-  position: relative;
-}
-.card:last-child{
-  margin-bottom: 50px;
-}
-.icon{
-  width: 100px;
-  height: 100px;
-  position: absolute;
-  top: 170px;
-  left: 100px;
-  border-radius: 50%;
-  border: 3px solid rgb(255, 255, 255);
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
-  overflow: hidden;
-}
-.songName{
-  position: absolute;
-  left: 5px;
-  font-size: 14px;
-  color: white;
-  text-shadow: 0 0 3px rgb(0 0 0 / 70%), 0 0 3px rgb(0 0 0 / 70%), 0 0 3px rgb(0 0 0 / 70%), 0 0 3px rgb(0 0 0 / 70%), 0 0 3px rgb(0 0 0 / 70%);
-}
-.imgWrapper{
-  height: 50%;
-  background-color: #b4b3b1;
-  overflow: hidden;
-  text-align: center;
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
-}
-.article{
-  height: 50%;
-  text-align: center;
-}
-.lyrics{
-  font-size: 13px;
-  padding: 10px;
-  white-space: pre-wrap;
-  color: #555;
-}
-
-/* Modal */
-button {
-  font-size: 30px;
-  border: none;
-  background-color: transparent;
-  text-decoration: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  cursor: pointer;
-}
-
-.modal__overlay {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.6);
-}
-
-.modal__container {
-  max-width: 500px;
-  max-height: 100vh;
-  overflow-y: auto;
-}
-
-.modal__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* .modal__title {
-  font-weight: 600;
-  font-size: 1.25rem;
-  line-height: 1.25;
-} */
-.modal__content {
-  /* margin-top: 2rem;
-  margin-bottom: 2rem;
-  line-height: 1.5; */
-}
-
-.modal__close::before {content: "\2715";}
-
-/* Animation */
-@keyframes mmfadeIn {
-  from {
-      opacity: 0;
-  }
-
-  to {
-      opacity: 1;
-  }
-}
-
-@keyframes mmfadeOut {
-  from {
-      opacity: 1;
-  }
-
-  to {
-      opacity: 0;
-  }
-}
-
-@keyframes mmslideIn {
-  from {
-      transform: translateY(10%);
-  }
-
-  to {
-      transform: translateY(0);
-  }
-}
-
-@keyframes mmslideOut {
-  from {
-      transform: translateY(0);
-  }
-
-  to {
-      transform: translateY(-10%);
-  }
-}
-
-.micromodal-slide {
-  display: none;
-}
-
-.micromodal-slide.is-open {
-  display: block;
-}
-
-.micromodal-slide[aria-hidden="false"] .modal__overlay {
-  animation: mmfadeIn 0.8s cubic-bezier(0.34, 0.07, 0.095, 0.995);
-}
-
-.micromodal-slide[aria-hidden="false"] .modal__container {
-  animation: mmslideIn 0.8s cubic-bezier(0.34, 0.07, 0.095, 0.995);
-}
-
-.micromodal-slide[aria-hidden="true"] .modal__overlay {
-  animation: mmfadeOut 0.8s cubic-bezier(0.34, 0.07, 0.095, 0.995);
-}
-
-.micromodal-slide[aria-hidden="true"] .modal__container {
-  animation: mmslideOut 0.8s cubic-bezier(0.34, 0.07, 0.095, 0.995);
-}
-
-.micromodal-slide .modal__container,
-.micromodal-slide .modal__overlay {
-  will-change: transform;
-}
-
-.sp-ArtistImg{
-  max-width: 500px;
-}
-.sp{display: none;}
-
-.sentence{
-  padding: 40px;
-  padding-top: 240px;
-  text-align: center;
-}
-@media all and (max-width: 670px) {
-  .sentence{
-    padding-bottom: 0px;
-    padding-top: 100px;
-  }
-}
-@media all and (max-width: 670px) {
-  #app{
-    text-align: center;
-  }
-  .searchBox{
-    width: 90%;
-    margin-bottom: 0px;
-  }
-  .modal__container {
-    max-width: 80%;
-  }
-  .sp-ArtistImg,.sp-AlbumImg{
-    max-width: 100%;
-  }
-  .sp{
-    display: block;
-  }
-}
-
-.MIX_title{
-  font-size: 35px;
-}
-.explain{
-  margin: 10px;
-  color: #888;
-}
-.PunchLineIcon{
-  width: 50px;
-  margin: 5px 5px -5px 5px;
-}
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js"></script>
+<script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="./JavaScript/index.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            keyword: '',
+            rappers: [
+                {
+                    id: 1,
+                    song:'Here is happiness',
+                    name: '神門',
+                    lyrics: '受け止めるにはだいぶかかる\nけど良かった俺にはマイクがある\n生きる理由は分からないが\n死ねない理由ならば沢山ある',
+                    rapperImg:'./images/punch-line-images/goudo.gif',
+                    albumImg:'./images/punch-line-images/kokoro.gif'
+                },
+                {
+                    id: 2,
+                    song:'Azalea',
+                    name: '神門',
+                    lyrics: 'ついに別れが訪れたけど\n自慢になんない俺に今日まで\n世界一だと思えたあなたを\n彼女と呼ばせてくれてありがとう',
+                    rapperImg:'./images/punch-line-images/goudo.gif',
+                    albumImg:'./images/punch-line-images/Azalea.gif'
+                },
+                {
+                    id: 3,
+                    song:'なら、こう生きよう',
+                    name: '神門',
+                    lyrics: '雨なら上がる だけどまた降る\n未完成ゆえに不安が邪魔する\n飛び込む勇気が道に変わる',
+                    rapperImg:'./images/punch-line-images/goudo.gif',
+                    albumImg:'./images/punch-line-images/narakouikiyou.gif'
+                },
+                {
+                    id: 4,
+                    song:'108bars',
+                    name: '小林勝行',
+                    lyrics: 'オカン 俺こんなんなる\n思わんかったわ\nごめんな、もお俺夢だけやねん\nドキドキするんは\n夢だけやねん',
+                    rapperImg:'./images/punch-line-images/kobayasi.gif',
+                    albumImg:'./images/punch-line-images/108bars.gif'
+                },
+                {
+                    id: 5,
+                    song:'オレヲダキシメロ',
+                    name: '小林勝行',
+                    lyrics: '俺は黒いペン\nただ単 自分のツレ\n白紙の上で 黒になって命をけずる\n俺は黒いペン\n今日、生きた正義残すねん',
+                    rapperImg:'./images/punch-line-images/kobayasi.gif',
+                    albumImg:'./images/punch-line-images/orewodakisimero.gif'
+                },
+                {
+                    id: 6,
+                    song:'get paid',
+                    name: 'KEIJU',
+                    lyrics: 'お金が一番 だったら寂しい\nあったかい家 良い先輩に 馬鹿な後輩\n俺たちの暮らし 先は見えない\nだけど止まらない\n2度と無い世界で生きて\n見て見たい物がある',
+                    rapperImg:'./images/punch-line-images/KEIJU.gif',
+                    albumImg:'./images/punch-line-images/getpaid.gif'
+                },
+                {
+                    id: 7,
+                    song:'奮闘中',
+                    name: 'chouji',
+                    lyrics: 'もうすぐ売れる予定の音楽家\nそう言い続けて13年\n泣いて泣いてラッパーになりてえ\n誰にも見せない涙が歌に\nこの瞬間、心が踊る',
+                    rapperImg:'./images/punch-line-images/chouji.gif',
+                    albumImg:'./images/punch-line-images/奮闘中.gif'
+                },
+                {
+                    id: 8,
+                    song:'Love Yourself',
+                    name: 'ZORN',
+                    lyrics: 'もう全てがどうでも良い 落ち込み超凹み\n心が折れそうに 酒でも持って来い\n死にかけてもまた生き返って\n全てを詩に変えて 起死回生',
+                    rapperImg:'./images/punch-line-images/ZORN.gif',
+                    albumImg:'./images/punch-line-images/LoveYourself.gif'
+                },
+                {
+                    id: 9,
+                    song:'いたいのとんでけ',
+                    name: 'ZORN',
+                    lyrics: '良い事は頑張っても無く\nやなことはただ待ってもある\nそれなら死にたいの悲鳴は\nそれでも生きたいと似ていた',
+                    rapperImg:'./images/punch-line-images/ZORN.gif',
+                    albumImg:'./images/punch-line-images/itainotondeke.gif'
+                },
+                {
+                    id: 10,
+                    song:'Lost',
+                    name: 'ZORN',
+                    lyrics: 'なぁこれが幸せか？\n虚しくなりに俺は来ただけか？\nこんなんじゃ文無しの方がマシ\n手にする事は無くす事だった\nこれから掴むどんなもんより\n最初に持ってたもんが尊い',
+                    rapperImg:'./images/punch-line-images/ZORN.gif',
+                    albumImg:'./images/punch-line-images/Lost.gif'
+                },
+                {
+                    id: 11,
+                    song:'Cheep Sunday',
+                    name: '唾奇',
+                    lyrics: '死ねる程病んだ\nアンサー馬鹿ばっか\n俺はラッパー 口を動かす\nラップしてなけりゃカス いや違うな\nラップしてるカス',
+                    rapperImg:'./images/punch-line-images/tubaki.gif',
+                    albumImg:'./images/punch-line-images/CheepSunday.gif'
+                },
+                {
+                    id: 12,
+                    song:'Heaven',
+                    name: 'ACE COOL',
+                    lyrics: '明日死んでも悔いは無い\n今魂を吹き込む\n音で繋がるyou and i\n届け 歌いたい\n溢れる言葉が止まらない',
+                    rapperImg:'./images/punch-line-images/ACECOOL.gif',
+                    albumImg:'./images/punch-line-images/Heaven.gif'
+                },
+                {
+                    id: 13,
+                    song:'DAY (feat. ACE COOL, YOUNG FREEZ, JOHNNY & RYO the SKYWALKER)',
+                    name: 'ACE COOL',
+                    lyrics: '今日が最後の日だとしても\nステージに向かう\n吐き出していく言葉 怒りと嘆き\n命は儚い 毎日が青春\nこの心臓が止まっても 声は死なない',
+                    rapperImg:'./images/punch-line-images/ACECOOL.gif',
+                    albumImg:'./images/punch-line-images/Day.gif'
+                },
+                {
+                    id: 14,
+                    song:'革命',
+                    name: 'MOROHA',
+                    lyrics: 'お前もほんとは気付いてるんだ\nシラフじゃ語れぬ夢は惨めだ\n現実は辛い 暗い 時に苦しい\nそれでも妄想よりは眩しい',
+                    rapperImg:'./images/punch-line-images/moroha.gif',
+                    albumImg:'./images/punch-line-images/morohaAlbum.gif'
+                },
+                {
+                    id: 15,
+                    song:'三文銭',
+                    name: 'MOROHA',
+                    lyrics: '噂によると夢は生き物で\n愚痴や言い訳で\nすぐに弱っちまうらしいんだ\n唯一の好物は可能性\n良かった\n俺やあんたも腐るほど持ってる',
+                    rapperImg:'./images/punch-line-images/moroha.gif',
+                    albumImg:'./images/punch-line-images/morohaAlbum.gif'
+                },
+                {
+                    id: 16,
+                    song:'何ひとつうしなわず',
+                    name: 'BRON-K',
+                    lyrics: 'Baby Thank you so much\n何ひとつうしなわず\n全て手に入れたいと\n思う事はわがままかい？',
+                    rapperImg:'./images/punch-line-images/BRON-K.gif',
+                    albumImg:'./images/punch-line-images/nanihitotu.gif'
+                },
+                {
+                    id: 17,
+                    song:'ME AGAINST THE WORLD feat.KARIBEL for MAJOR MUSIC',
+                    name: 'SEEDA',
+                    lyrics: '夢を否定されても\n絶対負けるな\n自分を曲げるな',
+                    rapperImg:'./images/punch-line-images/SEEDA.gif',
+                    albumImg:'./images/punch-line-images/MeAgainstTheWorld.gif'
+                },
+                {
+                    id: 18,
+                    song:'LIVIN',
+                    name: 'SEEDA',
+                    lyrics: '誰もが嘘つくせめて\n好きな人に俺は騙されていたい\n温もり求め家を探し\n刺激求め旅をする\n人は歩くだけ',
+                    rapperImg:'./images/punch-line-images/SEEDA.gif',
+                    albumImg:'./images/punch-line-images/LIVIN.gif'
+                },
+                {
+                    id: 19,
+                    song:'花と雨',
+                    name: 'SEEDA',
+                    lyrics: 'なあ神様だか何だか\n目に見えねぇが\n死ぬ程苦しんだら\n幸を与えてくれ',
+                    rapperImg:'./images/punch-line-images/SEEDA.gif',
+                    albumImg:'./images/punch-line-images/花と雨.gif'
+                },
+                {
+                    id: 20,
+                    song:'not(dead)',
+                    name: 'YDIZZY',
+                    lyrics: '奪われた自由\n奪い返す銃がマイク',
+                    rapperImg:'./images/punch-line-images/ydizzy.gif',
+                    albumImg:'./images/punch-line-images/ydizzyAlbum.gif'
+                },
+                {
+                    id: 21,
+                    song:'Time Alone',
+                    name: 'YDIZZY',
+                    lyrics: '今の辛い自分がいるから\nいつかの笑える自分がいる\n大事な物をポッケにしまい\n心で感じ日々を生きたい',
+                    rapperImg:'./images/punch-line-images/ydizzy.gif',
+                    albumImg:'./images/punch-line-images/ydizzyAlbum.gif'
+                },
+                {
+                    id: 22,
+                    song:'YOUR LANE feat.鋼田テフロン',
+                    name: 'AKLO',
+                    lyrics: '過去ってやつは消せない\nならばFutureてやつで攻めりゃ良い\nそのPain ハピネスで埋める工程\nなるべく早めに抜け出そうぜ',
+                    rapperImg:'./images/punch-line-images/AKLO.gif',
+                    albumImg:'./images/punch-line-images/YourLane.gif'
+                },
+            ]
+        },
+        computed: {
+            filteredRappers: function() {
+                return this.rappers.filter(function (el) {
+                    return ( el.song.indexOf(this.keyword) !== -1 ||
+                        el.name.indexOf(this.keyword) !== -1 ||
+                        el.lyrics.indexOf(this.keyword) !== -1 )                         
+                }, this)
+            }
+        },
+        watch: {
+            keyword: function () {
+                setTimeout(() => {
+                    this.init()
+                }, 100)
+            }
+        },
+        mounted() {
+            this.init()
+        },
+        methods: {
+            init() {
+                MicroModal.init({
+                    disableScroll: true,
+                    awaitOpenAnimation: true,
+                    awaitCloseAnimation: true
+                });
+                AOS.init({
+                    duration: 2000
+                });
+            }
+        }
+    });
+</script>
+</body>
+</html>
