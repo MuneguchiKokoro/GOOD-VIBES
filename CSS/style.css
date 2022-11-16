@@ -213,7 +213,7 @@ main {
 }
 @media all and (max-width: 670px) {
   .cp_arrows .cp_arrow {
-    left: 48.5%;
+    left: 48%;
   }
 }
 .cp_arrows .cp_arrowfirst {
